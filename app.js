@@ -22,6 +22,7 @@ function makeorder(event){
    let obj = new container(custname,age,color,car)
     console.log(Arraycontain);
     obj.renderOrder();
+    saveTolocalstorge();
 }
 formcreate.addEventListener('submit', makeorder)
 
@@ -58,14 +59,21 @@ function createTableHeader(){
 
 
 
-function display(){
-    for(let i =0 ; i<Arraycontain.length;i++){
-        Arraycontain[i].renderOrder();
-    }
-    console.log(display());
-}
-
 function saveTolocalstorge(){
-    let data = JSON.stringify()
+    let data = JSON.stringify(Arraycontain)
+    localStorage.setItem('key',data)
     
 }
+function readfromlocalstogre(){
+ let read = localStorage.getItem('key');
+ let normaldata = JSON.parse(read);
+ console.log(normaldata);
+ if(normaldata){
+ for(let i =0 ; i<normaldata.length;i++){
+ new container(normaldata[i].custname,normaldata[i].age,normaldata[i].color,normaldata[i].car) 
+ Arraycontain[i].renderOrder();   
+}
+
+}
+}
+readfromlocalstogre();
