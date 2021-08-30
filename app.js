@@ -3,12 +3,13 @@ let tableEl = document.getElementById('table')
 
 let Arraycontain =[];
 
-let header =['name','age of car','color of car','type car'];
-function container(custname,age,color,car){
+let header =['name','age of cus','color ','type cat','image'];
+function container(custname,age,color,cat,image){
     this.custname = custname;
     this.age =age;
     this.color= color;
-    this.car = car; 
+    this.cat = cat; 
+    this.image = image;
     Arraycontain.push(this)
 }
 
@@ -18,8 +19,9 @@ function makeorder(event){
     let custname = event.target.custname.value;
     let age = event.target.age.value;
     let color = event.target.color.value;
-    let car = event.target.car.value; 
-   let obj = new container(custname,age,color,car)
+    let cat = event.target.cat.value; 
+    let image = event.target.image.value;
+   let obj = new container(custname,age,color,cat,image)
     console.log(Arraycontain);
     obj.renderOrder();
     saveTolocalstorge();
@@ -53,27 +55,44 @@ function createTableHeader(){
     tdEl3.textContent = this.color;
     row.appendChild(tdEl3)
     let tdEl4 = document.createElement('td')
-    tdEl4.textContent = this.car;
+    tdEl4.textContent = this.cat;
     row.appendChild(tdEl4)
+    // create img
+    let tdEl7 = document.createElement('td');
+    let image = document.createElement('img');
+    image.setAttribute("style", "width:200px;","hight:150px");
+    image.setAttribute('src', this.image);
+    tdEl7.appendChild(image);
+    row.appendChild(tdEl7);
 }
 
-
+// function display(){
+//     for(let i =0 ; i<Arraycontain.length;i++){
+//         Arraycontain[i].renderOrder();
+//     }
+// }
 
 function saveTolocalstorge(){
     let data = JSON.stringify(Arraycontain)
     localStorage.setItem('key',data)
     
 }
+
 function readfromlocalstogre(){
  let read = localStorage.getItem('key');
  let normaldata = JSON.parse(read);
+//  if(normaldata){
+    
+// Arraycontain = normaldata;
+// renderOrder();
+// }
  console.log(normaldata);
  if(normaldata){
- for(let i =0 ; i<normaldata.length;i++){
- new container(normaldata[i].custname,normaldata[i].age,normaldata[i].color,normaldata[i].car) 
- Arraycontain[i].renderOrder();   
-}
-
-}
+    for(let i =0 ; i<normaldata.length;i++){
+    new container(normaldata[i].custname,normaldata[i].age,normaldata[i].color,normaldata[i].cat,normaldata[i].image) 
+    Arraycontain[i].renderOrder();
+   }
+   
+   }
 }
 readfromlocalstogre();
